@@ -1,0 +1,41 @@
+{
+    "name": "ilbronza/addresses",
+    "description": ":Addresses feature for Laravel models",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Davide Bronzini",
+            "email": "davide_bronzini@hotmail.com",
+            "homepage": "https://sistema.srl"
+        }
+    ],
+    "homepage": "https://github.com/ilbronza/addresses",
+    "keywords": ["Laravel", "Addresses"],
+    "require": {
+        "illuminate/support": "~9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~7"
+    },
+    "autoload": {
+        "psr-4": {
+            "IlBronza\\Addresses\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IlBronza\\Addresses\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "IlBronza\\Addresses\\AddressesServiceProvider"
+            ],
+            "aliases": {
+                "Addresses": "IlBronza\\Addresses\\Facades\\Addresses"
+            }
+        }
+    }
+}
