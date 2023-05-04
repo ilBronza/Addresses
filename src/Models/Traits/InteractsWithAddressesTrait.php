@@ -22,8 +22,8 @@ trait InteractsWithAddressesTrait
 			$type = config('addresses.default_type');
 
 		return $this->morphOne(
-			$this->getPriceModelClassName(),
-			'priceable'
+			$this->getAddressModelClassName(),
+			'addressable'
 		)->where('type', $type);
 	}
 

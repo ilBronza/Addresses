@@ -10,6 +10,15 @@ class Address extends BaseModel
 {
 	use CRUDUseUuidTrait;
 
+    protected static function boot()
+    {
+       parent::boot();
+
+       static::creating(function ($model) {
+            $model->type = config('addresses.default_type');
+        });
+    }
+
 	public function addressable(): MorphTo
     {
         return $this->morphTo();
