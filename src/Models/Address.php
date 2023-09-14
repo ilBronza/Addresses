@@ -10,6 +10,8 @@ class Address extends BaseModel
 {
 	use CRUDUseUuidTrait;
 
+    static $deletingRelationships = [];
+
     protected static function boot()
     {
        parent::boot();
