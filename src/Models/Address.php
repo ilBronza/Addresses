@@ -4,11 +4,16 @@ namespace IlBronza\Addresses\Models;
 
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
+use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Address extends BaseModel
 {
+    use PackagedModelsTrait;
 	use CRUDUseUuidTrait;
+
+    static $packageConfigPrefix = 'addresses';
+    static $modelConfigPrefix = 'address';
 
     static $deletingRelationships = [];
 
