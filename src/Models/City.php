@@ -14,4 +14,8 @@ class City extends SluggableBaseModel
 
     static $deletingRelationships = [];
 
+    public function scopeByZipcode($query, string $zipcode)
+    {
+        return $query->where('zip', $zipcode);
+    }
 }
