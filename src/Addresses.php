@@ -25,44 +25,24 @@ class Addresses implements RoutedObjectInterface
                 'roles' => ['administrator']
             ]);
 
-        $productsManagerButton = $menu->createButton([
+        $addressesManagerButton = $menu->createButton([
             'name' => 'addressesManager',
-            'icon' => 'user-gear',
-            'text' => 'products::addresses.list'
+            'icon' => 'map-location-dot',
+            'text' => 'addresses::addresses.manage',
+            'children' => [
+                [
+                    'icon' => 'list',
+                    'href' => $this->route('addresses.index'),
+                    'text' => 'addresses::addresses.index'
+                ],
+            ]
         ]);
 
-        // $currentProductsButton = $menu->createButton([
-        //     'name' => 'products.current',
-        //     'icon' => 'users',
-        //     'text' => 'products::products.current',
-        //     'href' => IbRouter::route($this, 'products.current')
-        // ]);
-
-        // $productsButton = $menu->createButton([
-        //     'name' => 'products.index',
-        //     'icon' => 'users',
-        //     'text' => 'products::products.list',
-        //     'href' => IbRouter::route($this, 'products.index')
-        // ]);
-
-        // $button->addChild($productsManagerButton);
-
-        // $productsManagerButton->addChild($currentProductsButton);
-        // $productsManagerButton->addChild($productsButton);
-        // $productsManagerButton->addChild(
-        //     $menu->createButton([
-        //         'name' => 'accessories.index',
-        //         'icon' => 'users',
-        //         'text' => 'products::accessories.list',
-        //         'href' => IbRouter::route($this, 'accessories.index')
-        //     ])
-        // );
+        $button->addChild($addressesManagerButton);
     }
 
     static public function extractStreetAndNumber(string $streetNumber) : array|false
     {
-        // $pattern = '/^(Via\s[^\d,]+)[,\s]+(\d+.*)$/i';
-        // $pattern = '/^(Via\s[^\d,]+)[,\s]*([\d]+.*)$/i';
         $pattern = '/^([^\d,]+?)[,\s]*([\d]+.*)$/i';
 
         if (preg_match($pattern, $streetNumber, $matches))
@@ -83,14 +63,4 @@ class Addresses implements RoutedObjectInterface
 
         return $cities;
     }
-
-    // static function getRouteName(string $routeName)
-    // {
-    //     return config('products.routePrefix') . $routeName;
-    // }
-
-    // public function route(string $routeName, array $parameters = [])
-    // {
-    //     return IbRouter::route($this, $routeName, $parameters);
-    // }
 }
