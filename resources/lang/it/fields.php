@@ -14,4 +14,6 @@ return array (
   'latitude' => 'Latitudine',
   'longitude' => 'Longitudine',
   'package' => 'Funzione indirizzi',
+  'mySelfPrimary' => 'Id',
+  'address' => 'Indirizzo',
 );

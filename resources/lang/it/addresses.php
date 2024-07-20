@@ -1,6 +1,8 @@
 <?php
 
 return array (
-  'index' => 'Lista Indirizzi',
-  'manage' => 'Indirizzi',
+  'index' => 'Lista indirizzi',
+  'manage' => 'Gestisci indirizzi',
+  'list' => 'Lista',
+  'address' => 'Indirizzo',
 );
