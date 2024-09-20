@@ -46,6 +46,21 @@ class Address extends BaseModel
 		return (($provLength > 0) && ($provLength <= 3));
 	}
 
+	public function getStreet() : ? string
+	{
+		return $this->street;
+	}
+
+	public function getNumber() : ? string
+	{
+		return $this->number;
+	}
+
+	public function getStreetStringAttribute() : ? string
+	{
+		return trim("{$this->getStreet()} {$this->getNumber()}");
+	}
+
 	public function getState() : ?string
 	{
 		return $this->state;
