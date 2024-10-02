@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 use function stripos;
 use function strlen;
+use function trim;
 
 class Address extends BaseModel
 {
@@ -56,13 +57,49 @@ class Address extends BaseModel
 		return $this->number;
 	}
 
+	public function getProvince() : ? string
+	{
+		return $this->province;
+	}
+
+	public function getCity() : ? string
+	{
+		return $this->city;
+	}
+
 	public function getStreetStringAttribute() : ? string
 	{
 		return trim("{$this->getStreet()} {$this->getNumber()}");
 	}
 
+	public function getCityString() : ? string
+	{
+		if(! $province = $this->getProvince())
+			return $this->getCity();
+
+		if(! $city = $this->getCity())
+			return $province;
+
+		return "{$city} ({$province})";
+	}
+
+	public function getStreetString() : ? string
+	{
+		return $this->street_string;
+	}
+
 	public function getState() : ?string
 	{
 		return $this->state;
+	}
+
+	public function getZip() : ?string
+	{
+		return $this->zip;
+	}
+
+	public function getFullString()
+	{
+		return $this->getStreetString() . ' ' . $this->getCityString() . ' - ' . $this->getZip();
 	}
 }
