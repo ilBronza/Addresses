@@ -4,7 +4,11 @@ namespace IlBronza\Addresses\Models\Traits;
 
 use IlBronza\Addresses\Models\Address;
 
+use Illuminate\Support\Facades\Log;
+
 use function array_keys;
+use function class_basename;
+use function config;
 use function dd;
 use function in_array;
 
@@ -23,10 +27,13 @@ trait InteractsWithAddressesTrait
 	{
 		if (! $type)
 		{
-			if ($this->address)
+			if($this->relationLoaded('address'))
 				return $this->address;
 
-			return $this->createDefaultAddress();
+			if($address = $this->addresses()->first())
+				return $this->addresses()->first();
+
+			$type = 'default';
 		}
 
 		if ($address = $this->addresses()->where('type', $type)->first())
@@ -35,10 +42,10 @@ trait InteractsWithAddressesTrait
 		return $this->createAddressByType($type);
 	}
 
-	public function createDefaultAddress() : Address
+	public function createAddressByType(string $type) : Address
 	{
 		$address = Address::getProjectClassName()::make();
-		$address->type = config('addresses.default_type');
+		$address->type = $type;
 
 		$this->addAddress($address);
 
@@ -49,6 +56,12 @@ trait InteractsWithAddressesTrait
 		}
 
 		return $address;
+
+	}
+
+	public function createDefaultAddress() : Address
+	{
+		return $this->createAddressByType(config('addresses.default_type'));
 	}
 
 	public function addAddress(Address $address)
