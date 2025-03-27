@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;
 
 use function dd;
+use function implode;
 use function stripos;
 use function strlen;
 use function trim;
@@ -81,7 +82,15 @@ class Address extends BaseModel
 		if(! $city = $this->getCity())
 			return $province;
 
-		return "{$city} ({$province})";
+		$pieces = [];
+
+		if($city)
+			$pieces[] = $city;
+
+		if($province)
+			$pieces[] = "({$province})";
+
+		return implode(" ", $pieces);
 	}
 
 	public function getStreetString() : ? string
@@ -101,6 +110,17 @@ class Address extends BaseModel
 
 	public function getFullString()
 	{
-		return $this->getStreetString() . ' ' . $this->getCityString() . ' - ' . $this->getZip();
+		$pieces = [];
+
+		if($this->getStreetString())
+			$pieces[] = $this->getStreetString();
+
+		if($this->getCityString())
+			$pieces[] = $this->getCityString();
+
+		if($this->getZip())
+			$pieces[] = $this->getZip();
+
+		return implode(" ", $pieces);
 	}
 }
