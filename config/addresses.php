@@ -15,7 +15,7 @@ use IlBronza\Addresses\Models\Province;
 return [
 	'default_type' => 'default',
 
-	'enabled' => true,
+	'enabled' => false,
 
 	'models' => [
 		'address' => [
