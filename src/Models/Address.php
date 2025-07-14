@@ -12,6 +12,7 @@ use function dd;
 use function implode;
 use function stripos;
 use function strlen;
+use function strtolower;
 use function trim;
 
 /**
@@ -88,8 +89,29 @@ class Address extends BaseModel
 	 */
 	public function isInItaly() : bool
 	{
+		// if($this->id == 'f0c0d78f-be27-4343-8e6b-b9bef2147914')
+		// {
+		// 	dd('asd');
+		// 	if ($state = $this->getState())
+		// 	{
+		// 		dd($state);
+		// 		if (strtolower($state) == 'it')
+		// 			return true;
+
+		// 		return stripos($state, 'ital') !== false;
+		// 	}
+
+		// 	$provLength = strlen(Str::slug($this->province));
+
+		// 	return (($provLength > 0) && ($provLength <= 3));
+
+		// }
+
 		if ($state = $this->getState())
 		{
+			if (strtolower($state) == 'it')
+				return true;
+
 			return stripos($state, 'ital') !== false;
 		}
 
@@ -220,19 +242,13 @@ class Address extends BaseModel
 		$pieces = [];
 
 		if ($this->getStreetString())
-		{
 			$pieces[] = $this->getStreetString();
-		}
 
 		if ($this->getCityString())
-		{
 			$pieces[] = $this->getCityString();
-		}
 
 		if ($this->getZip())
-		{
 			$pieces[] = $this->getZip();
-		}
 
 		return implode(' ', $pieces);
 	}
