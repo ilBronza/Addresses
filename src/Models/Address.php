@@ -177,7 +177,7 @@ class Address extends BaseModel
 	 */
 	public function getCityString() : ?string
 	{
-		if (! $province = $this->getProvince())
+		if (! $province = strtoupper($this->getProvince()))
 		{
 			return $this->getCity();
 		}

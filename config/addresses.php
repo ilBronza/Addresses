@@ -17,6 +17,13 @@ return [
 
 	'enabled' => false,
 
+	'datatableFieldWidths' => [
+		'address' => [
+			'datatableFieldCity' => '16em',
+			'datatableFieldProvince' => '3em'
+			]
+	],
+
 	'models' => [
 		'address' => [
 			'class' => Address::class,
