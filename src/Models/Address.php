@@ -2,12 +2,12 @@
 
 namespace IlBronza\Addresses\Models;
 
+use IlBronza\Addresses\Models\GoogleAddress;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
 use IlBronza\CRUD\Traits\Model\PackagedModelsTrait;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Str;
-
 use function dd;
 use function implode;
 use function stripos;
@@ -80,6 +80,11 @@ class Address extends BaseModel
 	public function addressable() : MorphTo
 	{
 		return $this->morphTo();
+	}
+
+	public function googleAddress()
+	{
+		return $this->hasOne(GoogleAddress::gpc(), 'id', 'id');
 	}
 
 	/**
@@ -251,5 +256,10 @@ class Address extends BaseModel
 			$pieces[] = $this->getZip();
 
 		return implode(' ', $pieces);
+	}
+
+	public function getFullStringAttribute() : ? string
+	{
+		return $this->getFullString();
 	}
 }

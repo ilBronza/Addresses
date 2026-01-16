@@ -10,6 +10,7 @@ use IlBronza\Addresses\Http\Controllers\Parameters\Fieldsets\AddressesCreateStor
 use IlBronza\Addresses\Http\Controllers\Parameters\RelationshipsManagers\AddressRelationManager;
 use IlBronza\Addresses\Models\Address;
 use IlBronza\Addresses\Models\City;
+use IlBronza\Addresses\Models\GoogleAddress;
 use IlBronza\Addresses\Models\Province;
 
 return [
@@ -52,6 +53,10 @@ return [
 		'city' => [
 			'class' => City::class,
 			'table' => 'addresses__cities'
+		],
+		'googleAddress' => [
+			'class' => GoogleAddress::class,
+			'table' => 'addresses__google',
 		],
 		'province' => [
 			'class' => Province::class,
