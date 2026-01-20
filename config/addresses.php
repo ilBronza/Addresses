@@ -21,7 +21,8 @@ return [
 	'datatableFieldWidths' => [
 		'address' => [
 			'datatableFieldCity' => '16em',
-			'datatableFieldProvince' => '3em'
+			'datatableFieldProvince' => '3em',
+			'datatableFieldFullStreet' => '7em'
 			]
 	],
 
