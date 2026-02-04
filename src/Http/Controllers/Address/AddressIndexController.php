@@ -15,12 +15,12 @@ class AddressIndexController extends AddressCRUD
 
     public function getIndexFieldsArray()
     {
-        return config('addresses.models.address.fieldsGroupsFiles.index')::getFieldsGroup();
+        return config('addresses.models.address.fieldsGroupsFiles.index')::getTracedFieldsGroup();
     }
 
     public function getRelatedFieldsArray()
     {
-        return config('addresses.models.address.fieldsGroupsFiles.index')::getFieldsGroup();
+        return config('addresses.models.address.fieldsGroupsFiles.index')::getTracedFieldsGroup();
     }
 
     public function getIndexElements()

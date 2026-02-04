@@ -35,6 +35,11 @@ class Addresses implements RoutedObjectInterface
 					'href' => $this->route('addresses.index'),
 					'text' => 'addresses::addresses.index'
 				],
+				[
+					'icon' => 'list',
+					'href' => $this->route('coordinates.calculateMissing'),
+					'text' => 'addresses::addresses.coordinates.calculateMissing'
+				],
 			]
 		]);
 

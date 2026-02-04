@@ -1,5 +1,6 @@
 <?php
 
+use IlBronza\Addresses\Helpers\CoordinatesProviderHelper;
 use IlBronza\Addresses\Http\Controllers\Address\AddressCreateStoreController;
 use IlBronza\Addresses\Http\Controllers\Address\AddressDestroyController;
 use IlBronza\Addresses\Http\Controllers\Address\AddressEditUpdateController;
@@ -49,7 +50,10 @@ return [
                 'edit' => AddressEditUpdateController::class,
                 'update' => AddressEditUpdateController::class,
                 'destroy' => AddressDestroyController::class,
-            ]
+            ],
+			'helpers' => [
+				'coordinatesProviderHelper' => CoordinatesProviderHelper::class,
+			],
 		],
 		'city' => [
 			'class' => City::class,

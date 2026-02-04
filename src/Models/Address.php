@@ -2,6 +2,7 @@
 
 namespace IlBronza\Addresses\Models;
 
+use IlBronza\Addresses\Helpers\CoordinatesProviderHelper;
 use IlBronza\Addresses\Models\GoogleAddress;
 use IlBronza\CRUD\Models\BaseModel;
 use IlBronza\CRUD\Traits\Model\CRUDUseUuidTrait;
@@ -85,6 +86,14 @@ class Address extends BaseModel
 	public function googleAddress()
 	{
 		return $this->hasOne(GoogleAddress::gpc(), 'id', 'id');
+	}
+
+	public function getGoogleAddress() : ? GoogleAddress
+	{
+		if($this->googleAddress)
+			return $this->googleAddress;
+
+		return CoordinatesProviderHelper::provideGoogleAddressByAddress($this);
 	}
 
 	/**

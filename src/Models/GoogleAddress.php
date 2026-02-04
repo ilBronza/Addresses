@@ -37,4 +37,14 @@ class GoogleAddress extends BaseModel
 	 * @var string
 	 */
 	protected $keyType = 'string';
+
+	public function getLat() : string
+	{
+		return $this->navigation_point_latitude;
+	}
+
+	public function getLong() : string
+	{
+		return $this->navigation_point_longitude;
+	}
 }

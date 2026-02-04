@@ -2,10 +2,9 @@
 
 namespace IlBronza\Addresses\Models\Traits;
 
+use IlBronza\Addresses\Helpers\Coordinates;
 use IlBronza\Addresses\Models\Address;
-
 use Illuminate\Support\Facades\Log;
-
 use function array_keys;
 use function class_basename;
 use function config;
@@ -23,7 +22,7 @@ trait InteractsWithAddressesTrait
 
 	abstract function getAddressModelClassName() : string;
 
-	public function getAddress(string $type = null) : Address
+	public function getAddress(string $type = null) : ? Address
 	{
 		if (! $type)
 		{
@@ -86,4 +85,34 @@ trait InteractsWithAddressesTrait
 		$address->delete();
 	}
 
+	public function getCoordinates() : ? Coordinates
+	{
+		return cache()->remember(
+			$this->cacheKey('getCoordinates'),
+			3600 * 24 * 30,
+			function()
+			{
+				$address = $this->getAddress();
+
+				return Coordinates::createByAddress(
+					$address
+				);
+			}
+		);
+	}
+
+	public function getCoordinatesPair() : array
+	{
+		return $this->getCoordinates()->getPair();
+	}
+
+	public function getLatitude() : ? float
+	{
+		return $this->getCoordinates()?->getLatitude();
+	}
+
+	public function getLongitude() : ? float
+	{
+		return $this->getCoordinates()?->getLongitude();
+	}
 }
