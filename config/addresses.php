@@ -24,7 +24,11 @@ return [
 			'datatableFieldCity' => '16em',
 			'datatableFieldProvince' => '3em',
 			'datatableFieldFullStreet' => '7em'
-			]
+			],
+		'coordinates' => [
+			'datatableFieldLatitude' => '4em',
+			'datatableFieldLongitude' => '4em',
+		]
 	],
 
 	'models' => [

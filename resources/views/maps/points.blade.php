@@ -20,7 +20,7 @@ window.ibInitDeliveryMap = function (container) {
     if (!mapEl) {
         return;
     }
-
+    
     if (mapEl.dataset.initialized) {
         return;
     }
@@ -128,24 +128,73 @@ function drawRoute(points) {
         stopover: true
     }));
 
-    DeliveryMap.directionsService.route({
+    const request = {
         origin: origin,
         destination: destination,
         waypoints: waypoints,
-        optimizeWaypoints: true,
         travelMode: google.maps.TravelMode.DRIVING
+    };
+
+    // 1. Route con ordine fornito dall'utente (per la mappa)
+    DeliveryMap.directionsService.route({
+        ...request,
+        optimizeWaypoints: false
     }, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
             DeliveryMap.directionsRendererOutline.setDirections(result);
             DeliveryMap.directionsRenderer.setDirections(result);
-            logRouteSummary(result);
+            logRouteSummary(result, points);
         } else {
             console.error('Directions request failed:', status);
         }
     });
+
+    // 2. Route ottimizzata (solo per l'alert se ordine suggerito è diverso)
+    DeliveryMap.directionsService.route({
+        ...request,
+        optimizeWaypoints: true
+    }, (result, status) => {
+        if (status !== google.maps.DirectionsStatus.OK) {
+            return;
+        }
+        const route = result.routes[0];
+        const waypointOrder = route.waypoint_order;
+        const hasWaypoints = waypointOrder && waypointOrder.length > 0;
+        const isOrderDifferent = hasWaypoints && waypointOrder.some((idx, i) => idx !== i);
+
+        if (!isOrderDifferent) {
+            return;
+        }
+
+        const waypointLabels = points.slice(1, -1).map(p => p.label ?? 'Senza nome');
+        const orderedLabels = waypointOrder.map((idx, i) => `${i + 1}. ${waypointLabels[idx]}`).join('<br />');
+
+        const orderedStopLabels = [
+            points[0].label ?? 'Partenza',
+            ...waypointOrder.map(idx => waypointLabels[idx]),
+            points[points.length - 1].label ?? 'Arrivo'
+        ];
+        const legsSummary = route.legs.map((leg, i) =>
+            `${i + 1}. ${orderedStopLabels[i]} → ${orderedStopLabels[i + 1]}: ${leg.distance.text}, ${leg.duration.text}`
+        ).join('<br />');
+
+        let totalDist = 0, totalDur = 0;
+        route.legs.forEach(leg => {
+            totalDist += leg.distance.value;
+            totalDur += leg.duration.value;
+        });
+        const totalKm = (totalDist / 1000).toFixed(2);
+        const totalMin = Math.round(totalDur / 60);
+
+        window.addDangerNotification(
+            `<strong>Totale percorso ottimizzato: ${totalKm} km - ${totalMin} min</strong><br /><br />` +
+            'Ordine waypoints ottimizzato (suggerito da Google):<br />' + orderedLabels +
+            '<br /><br />--- Parziali km e tempi (percorso ottimizzato) ---<br />' + legsSummary
+        );
+    });
 }
 
-function logRouteSummary(result) {
+function logRouteSummary(result, points) {
     const route = result.routes[0];
     let totalDistance = 0;
     let totalDuration = 0;
@@ -158,12 +207,27 @@ function logRouteSummary(result) {
     const distanceKm = (totalDistance / 1000).toFixed(2);
     const durationMin = Math.round(totalDuration / 60);
 
-    $(document.querySelector('[data-name="route-distance"]')).text(`${distanceKm} km`);
-    $(document.querySelector('[data-name="route-duration"]')).text(`${durationMin} min`);
-
     const stopNumbers = DeliveryMap.stops.length - 2;
 
-    window.addSuccessNotification(`Total distance: ${distanceKm} km<br />Total duration: ${durationMin} min<br />Destination number: ${stopNumbers}`);
+    const stopLabels = points.map(p => p.label ?? 'Senza nome');
+    const legsRows = route.legs.map((leg, i) => {
+        const distKm = (leg.distance.value / 1000).toFixed(0);
+        const durMin = Math.round(leg.duration.value / 60);
+        return `<tr><td>${distKm} km </td><td> ${durMin}' </td><td> ${stopLabels[i + 1]}</td></tr>`;
+    }).join('');
+
+    const container = document.querySelector('.fieldset-container-parameters');
+    if (container) {
+        let summaryEl = container.querySelector('.route-summary');
+        if (!summaryEl) {
+            summaryEl = document.createElement('div');
+            summaryEl.className = 'route-summary';
+            container.appendChild(summaryEl);
+        }
+        summaryEl.innerHTML =
+            `<p>Distanza: ${distanceKm} km <br /> Durata: ${durationMin} min` +
+            (legsRows ? `<table><thead><tr><th>Distanza</th><th>Tempo</th><th>Destinazione</th></tr></thead><tbody>${legsRows}</tbody></table>` : '');
+    }
 }
 
 </script>

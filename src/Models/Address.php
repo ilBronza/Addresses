@@ -50,6 +50,11 @@ class Address extends BaseModel
 	 */
 	static $deletingRelationships = [];
 
+	protected $fillable = [
+		'street', 'number', 'zip', 'town', 'city', 'province', 'region', 'state',
+		'latitude', 'longitude', 'type', 'addressable_type', 'addressable_id',
+	];
+
 	/**
 	 * Tipo di chiave primaria.
 	 *
