@@ -17,6 +17,17 @@ use IlBronza\Addresses\Models\Province;
 return [
 	'default_type' => 'default',
 
+	'routePrefix' => 'ibAddresses',
+
+	'defaultRoles' => [
+		'superadmin',
+		'administrator',
+		'addresses',
+	],
+
+	'routeRoles' => [
+	],
+
 	'enabled' => false,
 
 	'datatableFieldWidths' => [

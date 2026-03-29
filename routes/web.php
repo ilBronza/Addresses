@@ -5,7 +5,7 @@ use IlBronza\Addresses\Helpers\CoordinatesProviderHelper;
 use IlBronza\Products\Providers\Helpers\OrderProductPhases\OrderProductPhaseBaseCompletionHelper;
 
 Route::group([
-	'middleware' => ['web', 'auth'],
+	'middleware' => ['web', 'auth', 'addresses.roles'],
 	'prefix' => 'addresses-management',
 	'as' => config('addresses.routePrefix')
 	],

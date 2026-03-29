@@ -2,6 +2,7 @@
 
 namespace IlBronza\Addresses;
 
+use IlBronza\Addresses\Http\Middleware\AddressesMiddlewareRolesPermissions;
 use IlBronza\CRUD\Traits\IlBronzaPackages\IlBronzaServiceProviderPackagesTrait;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,6 +21,8 @@ class AddressesServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'addresses');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+
+        $this->app['router']->aliasMiddleware('addresses.roles', AddressesMiddlewareRolesPermissions::class);
 
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
