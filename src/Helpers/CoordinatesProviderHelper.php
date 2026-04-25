@@ -17,6 +17,8 @@ class CoordinatesProviderHelper
 	static $modelConfigPrefix = 'address';
 	static $classConfigPrefix = 'coordinatesProviderHelper';
 
+	public Model $address;
+
 	public function getSubjectModel() : Model
 	{
 		return $this->address;
@@ -148,7 +150,7 @@ class CoordinatesProviderHelper
 		{
 			$helper->addMessage($e->getMessage());
 
-			return false;
+			return null;
 		}
 	}
 

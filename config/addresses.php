@@ -30,6 +30,9 @@ return [
 
 	'enabled' => false,
 
+	'usesGoogleCoordinates' => false,
+	'usesFilesCabinets' => false,
+
 	'datatableFieldWidths' => [
 		'address' => [
 			'datatableFieldCity' => '16em',
