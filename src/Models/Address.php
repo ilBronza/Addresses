@@ -272,6 +272,36 @@ class Address extends BaseModel
 		return implode(' ', $pieces);
 	}
 
+	public function getFormattedFullString() : string
+	{
+		$pieces = [];
+
+		if ($this->getStreetString())
+			$pieces[] = $this->getStreetString();
+
+		if ($this->getCityString())
+		{
+			$pieces[] = "<br />";
+			$pieces[] = $this->getCityString();
+		}
+
+		if ($this->getZip())
+		{
+			if($this->getCityString())
+				$pieces[] = " - ";
+
+			else
+				$pieces[] = "<br />";
+
+			$pieces[] = $this->getZip();
+		}
+
+		if ($this->getProvince())
+			$pieces[] = "({$this->getProvince()})";
+
+		return implode(' ', $pieces);
+	}
+
 	public function getFullStringAttribute() : ? string
 	{
 		return $this->getFullString();
