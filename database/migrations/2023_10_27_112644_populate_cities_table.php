@@ -15,12 +15,15 @@ return new class extends Migration
         if(! $row['I'])
             return null;
 
-        if($province = Province::findCached($row['I']))
+        $slug = strtolower((($row['I'] != "__") && ($row['I'] != "_") && ($row['I'] != "") && ($row['I'] != " ")) ? $row['I'] : ucwords(strtolower($row['C'])));
+
+        if ($province = Province::where('slug', $slug)->first()) {
             return $province;
+        }
 
         $province = Province::make();
         $province->name = ucwords(strtolower($row['C']));
-        $province->slug = strtolower((($row['I'] != "__")&&($row['I'] != "_")&&($row['I'] != "")&&($row['I'] != " "))? $row['I'] : $province->name);
+        $province->slug = $slug;
         $province->save();
 
         return $province;
