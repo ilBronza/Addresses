@@ -20,7 +20,7 @@ class AddressesServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'addresses');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'addresses');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/addresses.php');
 
         $this->app['router']->aliasMiddleware('addresses.roles', AddressesMiddlewareRolesPermissions::class);
 
