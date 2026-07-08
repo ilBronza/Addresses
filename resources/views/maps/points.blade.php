@@ -186,12 +186,12 @@ function drawRoute(points) {
         const totalKm = (totalDist / 1000).toFixed(2);
         const totalMin = Math.round(totalDur / 60);
 
-        window.addDangerNotification(
+{{--         window.addDangerNotification(
             `<strong>Totale percorso ottimizzato: ${totalKm} km - ${totalMin} min</strong><br /><br />` +
             'Ordine waypoints ottimizzato (suggerito da Google):<br />' + orderedLabels +
             '<br /><br />--- Parziali km e tempi (percorso ottimizzato) ---<br />' + legsSummary
         );
-    });
+ --}}    });
 }
 
 function logRouteSummary(result, points) {
