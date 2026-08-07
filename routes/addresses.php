@@ -7,13 +7,16 @@ use IlBronza\Products\Providers\Helpers\OrderProductPhases\OrderProductPhaseBase
 Route::group([
 	'middleware' => ['web', 'auth', 'addresses.roles'],
 	'prefix' => 'addresses-management',
-	'as' => config('addresses.routePrefix')
+	'as' => config('addresses.routePrefix'),
+	'routeTranslationPrefix' => Addresses::getRouteTranslationPrefix(),
 	],
 function()
 {
 	Route::group(['prefix' => 'addresses'], function()
 	{
-		Route::group(['prefix' => 'coordinates', 'as' => 'coordinates.'],
+		Route::group(['prefix' => 'coordinates', 'as' => 'coordinates.',
+		'routeTranslationPrefix' => Addresses::getRouteTranslationPrefix(),
+	],
 		function()
 		{
 			Route::get('calculate-missing', function()
