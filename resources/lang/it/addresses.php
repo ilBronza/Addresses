@@ -6,4 +6,6 @@ return array (
 	'list' => 'Lista',
 	'address' => 'Indirizzo',
 	'addresses' => 'Indirizzi',
+
+  'coordinates.calculateMissing' => 'Calcola coordinate mancanti',
 );
