@@ -131,6 +131,9 @@ class Address extends BaseModel
 			if (strtolower($state) == 'it')
 				return true;
 
+			if (strtolower($state) == 'ita')
+				return true;
+
 			return stripos($state, 'ital') !== false;
 		}
 
